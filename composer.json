@@ -1,0 +1,28 @@
+{
+    "name": "fruit/chartkit",
+    "description": "console chart maker",
+    "authors": [
+        {
+            "name": "Ronmi Ren",
+            "email": "ronmi@patrolavia.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*",
+        "squizlabs/php_codesniffer": "*",
+	"phploc/phploc": "*",
+	"pdepend/pdepend": "*",
+	"phpmd/phpmd": "*",
+	"sebastian/phpcpd": "*"
+    },
+    "require": {
+    },
+    "suggest": {
+	"fruit/watchkit": "@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fruit\\ChartKit\\": "src"
+        }
+    }
+}
