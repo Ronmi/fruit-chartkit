@@ -5,7 +5,7 @@ namespace Fruit\ChartKit;
 class HorizontalBarChart
 {
     private $bars;
-    private $width;
+    public $width;
 
     public function __construct($width = 0)
     {
@@ -43,7 +43,6 @@ class HorizontalBarChart
         }
 
         $ret .= "|\n";
-        $ret .= "+" . str_repeat('-', $this->width);
         return $ret;
     }
 }
