@@ -2,6 +2,10 @@
 
 namespace Fruit\ChartKit;
 
+use Fruit\Convas\Buffer;
+use Fruit\Convas\Graphics;
+use Fruit\Convas\WString;
+
 class HorizontalBarChart
 {
     private $bars;
@@ -22,9 +26,11 @@ class HorizontalBarChart
         return $this;
     }
 
-    public function render()
+    public function render($title = '')
     {
-        $ret = "\n";
+        $buf = new Buffer;
+        $g = new Graphics($buf);
+
         $chartWidth = $this->width;
         $maxValue = 0;
         foreach ($this->bars as $bar) {
@@ -34,15 +40,21 @@ class HorizontalBarChart
         }
         $chartWidth -= strlen($maxValue) + 1;
 
+        $g->drawLine(0, 0, 0, count($this->bars) * 4 + 1)->transit(0, 1);
+
         foreach ($this->bars as $bar) {
-            $ret .= "|\n";
-            $plot = $bar->render($chartWidth, $maxValue);
-            foreach ($plot as $line) {
-                $ret .= sprintf("|%s\n", $line);
-            }
+            $bar->render($g, $chartWidth, $maxValue);
+            $g->transit(0, 4);
         }
 
-        $ret .= "|\n";
-        return $ret;
+        if ($title != '') {
+            $g->transit(0, -1);
+            $g->drawLine(0, 0, $this->width, 0);
+            $titleLen = WString::stringWidth($title);
+            $x = ceil(($this->width - $titleLen) / 2);
+            $g->drawString($x, 1, $title);
+        }
+
+        return implode("\n", $buf->exportAll()) . "\n";
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Fruit\ChartKit;
 
+use Fruit\Convas\Graphics;
+use Fruit\Convas\WString;
+
 class HorizontalBar
 {
     public $label;
@@ -33,24 +36,24 @@ class HorizontalBar
         return str_repeat(' ', $space) . $this->label . ' | ' . $this->value;
     }
 
-    public function render($chartWidth, $maxValue)
+    public function render(Graphics $g, $chartWidth, $maxValue)
     {
         $size = $this->width($chartWidth, $maxValue);
 
-        $ret = array();
-        $ret[0] = str_repeat('-', $size - 1) . '+';
+        $g->drawLine(0, 0, $size, 0);
+        $g->drawLine(0, 2, $size, 2);
+        $g->drawLine($size, 0, $size, 2);
+        $valStr = $this->value . '';
 
-        // |--+
-        // |  | 100  name
-        // |--+
-        $ret[1] = str_repeat(' ', $size - 1) . '| ' . $this->value . '  ' . $this->label;
+        $lblWidth = WString::stringWidth($this->label);
 
-        if ($size - 1 >= strlen($this->label) + 2) {
-            $ret[1] = $this->renderInside($size);
+        if ($size - 1 >= $lblWidth + 2) {
+            $g->drawString($size - 2 - $lblWidth, 1, $this->label);
+        } else {
+            $valStr .= ' ' . $this->label;
         }
 
-        $ret[2] = $ret[0];
-
-        return $ret;
+        $g->drawString($size + 2, 1, $valStr);
+        return;
     }
 }
