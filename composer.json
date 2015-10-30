@@ -16,7 +16,7 @@
 	"sebastian/phpcpd": "*"
     },
     "require": {
-	"fruit/convas": "0.0.2"
+	"fruit/convas": "0.0.3"
     },
     "suggest": {
 	"fruit/watchkit": "@dev"
